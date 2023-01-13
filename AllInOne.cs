@@ -1,4 +1,4 @@
-#error Error message
+﻿#error Error message
 #warning Warning message
 #pragma warning disable 414, 3021
 #pragma warning restore 3021
@@ -40,9 +40,11 @@ using static System.Linq.Enumerable;
 
 #endregion
 
-[assembly: System.Copyright(@"(C)""
+[assembly: System.Copyright(
+    @"(C)""
 
-2009")]
+2009"
+)]
 [module: System.Copyright("\n\t\u0123(C) \"2009" + "\u0123")]
 
 class TopLevelType : IDisposable
@@ -55,8 +57,8 @@ namespace My
     using A.B;
 
     interface CoContra<out T, in K> { }
-    delegate void CoContra2<[System.Obsolete()] out T, in K>()
-        where T : struct;
+
+    delegate void CoContra2<[System.Obsolete()] out T, in K>() where T : struct;
 
     public unsafe partial class A : C, I
     {
@@ -69,7 +71,7 @@ namespace My
 
         public A(int foo)
         {
-        L:
+            L:
             {
                 int i = sizeof(int);
                 ++i;
@@ -78,7 +80,7 @@ namespace My
             }
 
 #if DEBUG
-      Console.WriteLine(export.iefSupplied.command);
+            Console.WriteLine(export.iefSupplied.command);
 #endif
             const int? local = int.MaxValue;
             const Guid? local0 = new Guid(r.ToString());
@@ -176,22 +178,20 @@ namespace My
             var o1 = new MyObject();
             var o2 = new MyObject(var);
             var o3 = new MyObject { A = i };
-            var o4 = new MyObject(@dynamic) { A = 0, B = 0, C = 0 };
-            var o5 = new { A = 0 };
-            var dictionaryInitializer = new Dictionary<int, string>
+            var o4 = new MyObject(@dynamic)
             {
-                { 1, "" },
-                { 2, "a" }
+                A = 0,
+                B = 0,
+                C = 0
             };
+            var o5 = new { A = 0 };
+            var dictionaryInitializer = new Dictionary<int, string> { { 1, "" }, { 2, "a" } };
             float[] a = new float[] { 0f, 1.1f };
-            int[,,] cube = {
-                { { 111, 112 }, { 121, 122 } },
-                { { 211, 212 }, { 221, 222 } }
-            };
+            int[,,] cube = { { { 111, 112 }, { 121, 122 } }, { { 211, 212 }, { 221, 222 } } };
 
             int[][] jagged = { { 111 }, { 121, 122 } };
             int[][,] arr = new int[5][,]; // as opposed to new int[][5,5]
-            arr[0] = new int[5,5]; // as opposed to arr[0,0] = new int[5];
+            arr[0] = new int[5, 5]; // as opposed to arr[0,0] = new int[5];
             arr[0][0, 0] = 47;
             int[] arrayTypeInference = new[] { 0, 1 };
             switch (3) { }
@@ -229,11 +229,10 @@ namespace My
                     continue;
                 }
                 break;
-            }
-            while (i < 10);
+            } while (i < 10);
             for (int j = 0; j < 100; ++j)
             {
-                for (;;)
+                for (; ; )
                 {
                     for (int i = 0, j = 0; i < length; i++, j++) { }
                     if (true)
@@ -270,12 +269,18 @@ namespace My
                 process();
             using (var v = BeginScope())
             using (A a = new A())
-            using (A a = new A(), b = new A())
+            using (
+                A a = new A(),
+                    b = new A()
+            )
             using (BeginScope())
                 return;
             yield return this.items[3];
             yield break;
-            fixed (int* p = stackalloc int[100], q = &y)
+            fixed (
+                int* p = stackalloc int[100],
+                    q = &y
+            )
             {
                 *intref = 1;
             }
@@ -310,52 +315,48 @@ namespace My
                 let d = c
                 where d != null
                 join c1 in customers on c1.GetHashCode() equals c.GetHashCode()
-                join c1 in customers
-                    on c1.GetHashCode() equals c.GetHashCode()
-                    into e
+                join c1 in customers on c1.GetHashCode() equals c.GetHashCode() into e
                 group c by c.Country into g
                 orderby g.Count() ascending
                 orderby g.Key descending
                 select new { Country = g.Key, CustCount = g.Count() };
             query = from c in customers select c into d select d;
         }
+
         ~A() { }
+
         private readonly int f1;
+
         [Obsolete]
         [NonExisting]
         [Foo::NonExisting(var, 5)]
         [CLSCompliant(false)]
-        [
-            Obsolete,
-            System.NonSerialized,
-            NonSerialized,
-            CLSCompliant(true || false & true)
-        ]
+        [Obsolete, System.NonSerialized, NonSerialized, CLSCompliant(true || false & true)]
         private volatile int f2;
+
         [return: Obsolete]
         [method: Obsolete]
         public void Handler(object value) { }
-        public int m<T>(T t)
-            where T : class, new()
+
+        public int m<T>(T t) where T : class, new()
         {
             base.m(t);
             return 1;
         }
+
         public string P
         {
             get { return "A"; }
             set;
         }
         public abstract string P { get; }
-        public abstract int this[int index]
-        {
-            protected internal get;
-            internal protected set;
-        }
+        public abstract int this[int index] { protected internal get; internal protected set; }
+
         [method: Obsolete]
         [field: Obsolete]
         [event: Obsolete]
         public readonly event Event E;
+
         [event: Test]
         public event Action E1
         {
@@ -369,34 +370,42 @@ namespace My
                 E -= Handler;
             }
         }
+
         public static A operator +(A first, A second)
         {
             Delegate handler = new Delegate(Handler);
             return first.Add(second);
         }
+
         [method: Obsolete]
         [return: Obsolete]
         public static bool operator true(A a)
         {
             return true;
         }
+
         public static bool operator false(A a)
         {
             return false;
         }
+
         class C { }
     }
+
     public struct S : I
     {
         public S() { }
+
         private int f1;
+
         [Obsolete("Use Script instead", error: false)]
         private volatile int f2;
-        public abstract int m<T>(T t)
-            where T : struct
+
+        public abstract int m<T>(T t) where T : struct
         {
             return 1;
         }
+
         public string P
         {
             get
@@ -408,25 +417,26 @@ namespace My
         }
         public abstract string P { get; }
 
-        public abstract int this[int index]
-        {
-            get;
-            internal protected set;
-        }
+        public abstract int this[int index] { get; internal protected set; }
         public event Event E;
+
         public static A operator +(A first, A second)
         {
             return first.Add(second);
         }
+
         fixed int field[10];
+
         class C { }
     }
+
     public interface I
     {
         void A(int value);
         string Value { get; set; }
-        unsafe void UpdateSignatureByHashingContent([In]byte* buffer, int size);
+        unsafe void UpdateSignatureByHashingContent([In] byte* buffer, int size);
     }
+
     [type: Flags]
     public enum E
     {
@@ -435,18 +445,19 @@ namespace My
         C = 2 + A,
 #if DEBUG
         D,
-	}
+    }
 #else
         E,
-	}
+    }
 #endif
 
-
     public delegate void Delegate(object P);
+
     namespace Test
     {
         using System;
         using System.Collections;
+
         public class Список
         {
             public static IEnumerable Power(int number, int exponent)
@@ -457,10 +468,11 @@ namespace My
                 int אתר = 0;
                 while (++counter++ < --exponent--)
                 {
-                    result = result * number + +number+++++number;
+                    result = result * number + +number++++ + number;
                     yield return result;
                 }
             }
+
             static void Main()
             {
                 foreach (int i in Power(2, 8))
@@ -468,20 +480,18 @@ namespace My
                     Console.Write("{0} ", i);
                 }
             }
+
             async void Wait()
             {
                 await System.Threading.Tasks.Task.Delay(0);
             }
+
             void AsyncAnonymous() // C # 5 feature
             {
-                var task = Task.Factory.StartNew(
-                    async () =>
-                    {
-                        return await new WebClient().DownloadStringTaskAsync(
-                            "http://example.com"
-                        );
-                    }
-                );
+                var task = Task.Factory.StartNew(async () =>
+                {
+                    return await new WebClient().DownloadStringTaskAsync("http://example.com");
+                });
             }
         }
     }
@@ -491,28 +501,31 @@ namespace ConsoleApplication1
 {
     namespace RecursiveGenericBaseType
     {
-        class A<T> : B<A<T>, A<T>>
-            where T : A<T>
+        class A<T> : B<A<T>, A<T>> where T : A<T>
         {
             protected virtual A<T> M() { }
+
             protected abstract B<A<T>, A<T>> N() { }
+
             static B<A<T>, A<T>> O() { }
         }
 
         sealed class B<T1, T2> : A<B<T1, T2>>
         {
             protected override A<T> M() { }
+
             protected sealed override B<A<T>, A<T>> N() { }
+
             new static A<T> O() { }
         }
     }
 
     namespace Boo
     {
-        public class Bar<T>
-            where T : IComparable
+        public class Bar<T> where T : IComparable
         {
             public T f;
+
             public class Foo<U> : IEnumerable<T>
             {
                 public void Method<K, V>(K k, T t, U u)
@@ -540,12 +553,14 @@ namespace ConsoleApplication1
         {
             return new ConsoleApplication1.Test();
         }
+
         public static explicit operator Test(string s = "")
         {
             return new Test();
         }
 
         public int foo = 5;
+
         void Bar2()
         {
             foo = 6;
@@ -561,10 +576,11 @@ namespace ConsoleApplication1
             int? j = 6;
 
             Expression<Func<int>> e = () => i;
-            Expression<Func<bool, Action>> e2 = b => () =>
-            {
-                return;
-            };
+            Expression<Func<bool, Action>> e2 = b =>
+                () =>
+                {
+                    return;
+                };
             Func<bool, bool> f = async delegate(bool a)
             {
                 return await !a;
@@ -572,7 +588,7 @@ namespace ConsoleApplication1
             Func<int, int, int> f2 = (a, b) => 0;
             f2 = (int a, int b) => 1;
             Action a = Blah;
-            f2 = () =>  { };
+            f2 = () => { };
             f2 = () =>
             {
                 ;
@@ -603,8 +619,7 @@ namespace ConsoleApplication1
         public void Constants()
         {
             int i = 1 + 2 + 3 + 5;
-            global::System.String s =
-                "a" + (System.String)"a" + "a" + "a" + "a" + "A";
+            global::System.String s = "a" + (System.String)"a" + "a" + "a" + "a" + "A";
         }
 
         public void ConstructedType()
@@ -633,7 +648,8 @@ namespace Comments.XmlComments.UndocumentedKeywords
     /// <seealso cref=" "/>
     /// <value></value>
     /// <typeparam name="T"></typeparam>
-    class /*///*/C<T>
+    class /*///*/
+    C<T>
     {
         void M<U>(T t, U u)
         {
@@ -641,20 +657,28 @@ namespace Comments.XmlComments.UndocumentedKeywords
             /* *** / */
             /* //
              */
-            /*s*///comment
+            /*s*/
+            //comment
             // /***/
-            /*s*/int /*s*/intValue = 0;
-            intValue = intValue /*s*/+ 1;
-            string strValue = /*s*/"hello";
+            /*s*/int /*s*/
+            intValue = 0;
+            intValue =
+                intValue /*s*/
+                + 1;
+            string strValue = /*s*/
+                "hello";
             /*s*/MyClass c = new MyClass();
-            string verbatimStr = /*s*/@"\\\\";
+            string verbatimStr = /*s*/
+                @"\\\\";
         }
     }
 
     //General Test F. Type a very long class name, verify colorization happens correctly only upto the correct size (118324)
-    class TestClassXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/*Scen8*/{ }
+    class TestClassXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX /*Scen8*/
+    { }
 
-    class TestClassXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX22/*Scen9*/{ }
+    class TestClassXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX22 /*Scen9*/
+    { }
 
     class yield
     {
@@ -668,11 +692,10 @@ namespace Comments.XmlComments.UndocumentedKeywords
             Params(a: t, b: t);
             Params(ref c, out c);
         }
+
         void Params(ref dynamic a, out dynamic b, params dynamic[] c) { }
-        void Params(
-            out dynamic a = 2,
-            ref dynamic c = default(dynamic),
-            params dynamic[][] c) { }
+
+        void Params(out dynamic a = 2, ref dynamic c = default(dynamic), params dynamic[][] c) { }
 
         public override string ToString()
         {
@@ -728,6 +751,7 @@ namespace Comments.XmlComments.UndocumentedKeywords
         {
             public int X;
             public int Y;
+
             public void ThisAccess()
             {
                 this = this;
@@ -748,9 +772,11 @@ namespace Comments.XmlComments.UndocumentedKeywords
 
         // Expression bodies on method-like members
         public Point Move(int dx, int dy) => new Point(x + dx, y + dy);
+
         public static Complex operator +(Complex a, Complex b) => a.Add(b);
-        public static implicit operator string(Person p) =>
-            p.First + " " + p.Last;
+
+        public static implicit operator string(Person p) => p.First + " " + p.Last;
+
         public void Print() => Console.WriteLine(First + " " + Last);
 
         // Expression bodies on property-like function members
@@ -775,8 +801,9 @@ namespace Comments.XmlComments.UndocumentedKeywords
             // String interpolation
             string s = $"{p.Name, 20} is {p.Age:D3} year{{s}} old #";
             s = $"{p.Name} is \"{p.Age} year{(p.Age == 1 ? "" : "s")} old";
-            s = $"{(p.Age == 2 ? $"{new Person {  }}" : "")}";
-            s = $@"\{p.Name}
+            s = $"{(p.Age == 2 ? $"{new Person { }}" : "")}";
+            s =
+                $@"\{p.Name}
                                    ""\";
             s = $"Color [ R={func(b: 3):#0.##}, G={G:#0.##}, B={B:#0.##}, A={A:#0.##} ]";
 
@@ -820,6 +847,7 @@ namespace Comments.XmlComments.UndocumentedKeywords
         }
     }
 }
+
 #line 6
 #line 2 "test.cs"
 #line default
@@ -906,6 +934,7 @@ class CSharp72
     {
         Func<int, int> s = (in int x) => x;
         ref TValue this[in TKey index] => null;
+
         public static Vector3 operator +(in Vector3 x, in Vector3 y) => null;
 
         static readonly ref Vector3 M1_Trace()
@@ -961,8 +990,7 @@ class CSharp72
         }
     }
 
-    public void DoSomething(bool isEmployed, string personName, int personAge)
-    { }
+    public void DoSomething(bool isEmployed, string personName, int personAge) { }
 
     public void NonTrailingNamedArguments()
     {
@@ -980,24 +1008,23 @@ class CSharp72
 
     public void LeadingSeparator()
     {
-        var res = 0
-        + 123      // permitted in C# 1.0 and later
-        + 1_2_3    // permitted in C# 7.0 and later
-        + 0x1_2_3  // permitted in C# 7.0 and later
-        + 0b101    // binary literals added in C# 7.0
-        + 0b1_0_1  // permitted in C# 7.0 and later
-
-        // in C# 7.2, _ is permitted after the `0x` or `0b`
-        + 0x_1_2   // permitted in C# 7.2 and later
-        + 0b_1_0_1 // permitted in C# 7.2 and later
+        var res =
+            0
+            + 123 // permitted in C# 1.0 and later
+            + 1_2_3 // permitted in C# 7.0 and later
+            + 0x1_2_3 // permitted in C# 7.0 and later
+            + 0b101 // binary literals added in C# 7.0
+            + 0b1_0_1 // permitted in C# 7.0 and later
+            // in C# 7.2, _ is permitted after the `0x` or `0b`
+            + 0x_1_2 // permitted in C# 7.2 and later
+            + 0b_1_0_1 // permitted in C# 7.2 and later
         ;
     }
 }
 
 class CSharp73
 {
-    void Blittable<T>(T value)
-        where T : unmanaged
+    void Blittable<T>(T value) where T : unmanaged
     {
         var unmanaged = 666;
     }
@@ -1019,8 +1046,8 @@ class CSharp73
     {
         fixed (byte* ptr = byteArray)
         {
-           // ptr is a native pointer to the first element of the array
-           // byteArray is protected from being moved/collected by the GC for the duration of this block
+            // ptr is a native pointer to the first element of the array
+            // byteArray is protected from being moved/collected by the GC for the duration of this block
         }
     }
 
@@ -1034,7 +1061,8 @@ class CSharp73
 
     public void TupleEquality()
     {
-        (int, (int, int)) t1, t2;
+        (int, (int, int)) t1,
+            t2;
         var res = t1 == (1, (2, 3));
     }
 }
@@ -1096,7 +1124,8 @@ namespace CSharp80
         void UsingDeclarators()
         {
             using var item = new FileStream("./.f");
-            fixed (char* ch = "hell");
+            fixed (char* ch = "hell")
+                ;
             item.Dispose();
         }
 
@@ -1151,4 +1180,3 @@ namespace CSharp80
         }
     }
 }
-
